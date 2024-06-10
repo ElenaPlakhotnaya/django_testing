@@ -32,7 +32,7 @@ def test_anonymous_client_has_no_form(client, news):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures('list_news') 
+@pytest.mark.usefixtures('list_news')
 def test_news_count(client):
     """Количество новостей на главной странице — не более 10."""
     url = reverse('news:home')
@@ -43,7 +43,7 @@ def test_news_count(client):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures('list_news') 
+@pytest.mark.usefixtures('list_news')
 def test_news_order(client):
     """
     Новости отсортированы от самой свежей к самой старой.
@@ -58,7 +58,7 @@ def test_news_order(client):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures('list_comments') 
+@pytest.mark.usefixtures('list_comments')
 def test_comments_order(client, news):
     """
     Комментарии на странице отдельной новости отсортированы
