@@ -40,9 +40,7 @@ class TestNoteCreation(TestCase):
         self.assertEqual(notes_count, 0)
 
     def test_user_can_create_note(self):
-        """
-        Залогиненный пользователь может создать заметку.
-        """
+        """Залогиненный пользователь может создать заметку."""
         response = self.auth_client.post(self.url, data=self.form_data)
         self.assertRedirects(response, reverse('notes:success'))
         notes_count = Note.objects.count()

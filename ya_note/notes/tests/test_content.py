@@ -46,9 +46,7 @@ class TestNotesListPage(TestCase):
         self.assertIsInstance(response.context['form'], NoteForm)
 
     def test_edit_note_page_contains_form(self):
-        """
-        На страницы редактирования передаются формы.
-        """
+        """На страницы редактирования передаются формы."""
         response = self.auth_client.get(self.edit_url)
         self.assertIn('form', response.context)
         self.assertIsInstance(response.context['form'], NoteForm)
