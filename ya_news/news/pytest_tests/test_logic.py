@@ -29,8 +29,10 @@ def test_anonymous_user_cant_create_comment(client, form_data, news):
 
 
 def test_user_cant_use_bad_words(author_client, form_data, news):
-    """Если комментарий содержит запрещённые слова,
-    он не будет опубликован, а форма вернёт ошибку."""
+    """
+    Если комментарий содержит запрещённые слова,
+    он не будет опубликован, а форма вернёт ошибку.
+    """
     url = reverse('news:detail', args=(news.id,))
     form_data['text'] = BAD_WORDS[0]
     response = author_client.post(url, data=form_data)

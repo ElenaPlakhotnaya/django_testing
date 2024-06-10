@@ -13,9 +13,11 @@ from pytest_django.asserts import assertRedirects
 )
 @pytest.mark.django_db
 def test_pages_availability_for_anonymous_user(client, name):
-    """Главная страница доступна анонимному пользователю.
+    """
+    Главная страница доступна анонимному пользователю.
     Страницы регистрации пользователей, входа в учётную запись
-    и выхода из неё доступны анонимным пользователям."""
+    и выхода из неё доступны анонимным пользователям.
+    """
     url = reverse(name)
     response = client.get(url)
     assert response.status_code == HTTPStatus.OK
@@ -43,11 +45,13 @@ def test_page_news_detail_availability_for_anonymous_user(client, news):
 @pytest.mark.django_db
 def test_availability_for_comment_edit_and_delete(
     parametrized_client, name, comment, expected_status
-    ):
-    """Страницы удаления и редактирования комментария
+):
+    """
+    Страницы удаления и редактирования комментария
     доступны автору комментария.
     Страницы удаления и редактирования комментария
-    недоступны авторизованному пользователю."""
+    недоступны авторизованному пользователю.
+    """
     url = reverse(name, args=(comment.id,))
     response = parametrized_client.get(url)
     assert response.status_code == expected_status
@@ -59,10 +63,12 @@ def test_availability_for_comment_edit_and_delete(
 )
 @pytest.mark.django_db
 def test_redirect_for_anonymous_client(client, name, comment):
-    """При попытке перейти на страницу
-    редактирования или удаления комментария 
+    """
+    При попытке перейти на страницу
+    редактирования или удаления комментария
     анонимный пользователь перенаправляется
-    на страницу авторизации."""
+    на страницу авторизации.
+    """
     login_url = reverse('users:login')
     url = reverse(name, args=(comment.id,))
     expected_url = f'{login_url}?next={url}'
