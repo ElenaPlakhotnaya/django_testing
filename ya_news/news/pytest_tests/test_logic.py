@@ -1,7 +1,5 @@
 from http import HTTPStatus
 
-from django.urls import reverse
-
 import pytest
 from pytest_django.asserts import assertFormError, assertRedirects
 
@@ -26,7 +24,8 @@ def test_user_can_create_comment(author_client, author, detail_news_url,
     assert new_comment.author == author
 
 
-def test_anonymous_user_cant_create_comment(client, detail_news_url, form_data):
+def test_anonymous_user_cant_create_comment(client, detail_news_url,
+                                            form_data):
     """Анонимный пользователь не может отправить комментарий."""
     comments = Comment.objects.count()
     url = detail_news_url
@@ -47,7 +46,7 @@ def test_user_cant_use_bad_words(author_client, detail_news_url, form_data):
     assert Comment.objects.count() == comments
 
 
-def test_author_can_edit_comment(author_client, form_data, comment, news,
+def test_author_can_edit_comment(author_client, form_data, comment,
                                  edit_comment_url, detail_news_url):
     """Авторизованный пользователь может редактировать свои комментарии."""
     assert Comment.objects.count() == 1
