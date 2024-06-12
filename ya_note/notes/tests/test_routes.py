@@ -7,20 +7,20 @@ class TestRoutes(common.BaseTest):
 
     def test_pages_availability_for_different_users(self):
         """Проверка доступности страниц разным пользователям."""
-        users = (self.author_client, self.reader_client, self.client)
-        for user in users:
-            for url in self.URLS:
+        test_data = [
+            (self.HOME_PAGE, self.auth_client, HTTPStatus.OK),
+            (self.LOGIN, self.auth_client, HTTPStatus.OK),
+            (self.LOGOUT, self.auth_client, HTTPStatus.OK),
+            (self.SIGNUP, self.auth_client, HTTPStatus.OK),
+            (self.DETAIL_NOTE, self.reader_client, HTTPStatus.NOT_FOUND),
+            (self.EDIT_NOTE, self.reader_client, HTTPStatus.NOT_FOUND),
+            (self.DELETE_NOTE, self.reader_client, HTTPStatus.NOT_FOUND),
+        ]
+
+        for url, user, status in test_data:
+            with self.subTest(user=user, url=url, status=status):
                 response = user.get(url)
-                with self.subTest(user=user, url=url):
-                    if url in self.URLS_FOR_ANONYMOUS_USER and \
-                            user == self.client:
-                        self.assertEqual(response.status_code, HTTPStatus.OK)
-                    if url in self.URLS_NOT_FOR_READER and \
-                            user == self.reader_client:
-                        self.assertEqual(response.status_code,
-                                         HTTPStatus.NOT_FOUND)
-                    if user == self.author_client:
-                        self.assertEqual(response.status_code, HTTPStatus.OK)
+                self.assertEqual(response.status_code, status)
 
     def test_redirect_for_anonymous_client(self):
         """
@@ -33,7 +33,7 @@ class TestRoutes(common.BaseTest):
         login_url = self.LOGIN
 
         for url in self.URLS_FOR_REDIRECT:
-            with self.subTest():
+            with self.subTest(url=url):
                 redirect_url = f'{login_url}?next={url}'
                 response = self.client.get(url)
                 self.assertRedirects(response, redirect_url)

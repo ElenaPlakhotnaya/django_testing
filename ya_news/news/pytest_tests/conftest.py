@@ -90,7 +90,6 @@ def list_comments(news, author):
             news=news,
             author=author,
         )
-        comment.created = now + timedelta(days=index)
         comment.save()
 
 
