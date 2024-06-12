@@ -83,7 +83,6 @@ def list_news():
 
 @pytest.fixture
 def list_comments(news, author):
-    now = timezone.now()
     for index in range(10):
         comment = Comment.objects.create(
             text=f'Текст {index}',
